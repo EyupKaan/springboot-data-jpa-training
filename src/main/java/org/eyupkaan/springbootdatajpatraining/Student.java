@@ -3,6 +3,12 @@ package org.eyupkaan.springbootdatajpatraining;
 import jakarta.persistence.*;
 
 @Entity(name = "STUDENT")
+@Table(
+        name = "STUDENT",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "student_email_unique", columnNames = "E_MAIL")
+        }
+)
 public class Student {
     @Id
     @SequenceGenerator(
@@ -14,17 +20,39 @@ public class Student {
             strategy = GenerationType.SEQUENCE,
             generator = "student_sequence"
     )
+    @Column(
+            name = "ID",
+            updatable = false
+    )
     private Long id;
+    @Column(
+            name = "FIRST_NAME",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String firstName;
+    @Column(
+            name = "LAST_NAME",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String lastName;
+    @Column(
+            name = "E_MAIL",
+            nullable = false,
+            columnDefinition = "TEXT",
+            unique = true
+    )
     private String email;
+    @Column(
+            name = "AGE"
+    )
     private Integer age;
 
     public Student(){
 
     }
-    public Student(Long id, String firstName, String lastName, String email, Integer age) {
-        this.id = id;
+    public Student(String firstName, String lastName, String email, Integer age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
