@@ -18,4 +18,5 @@ public class Application {
             studentRepository.save(jhon);
         };
     }
+
 }
