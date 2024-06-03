@@ -13,6 +13,14 @@ public class Book {
             sequenceName = "book_sequence",
             allocationSize = 1
     )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "book_sequence"
+    )
+    @Column(
+            name = "ID",
+            updatable = false
+    )
     private Long id;
     @Column(
             name = "CREATED_AT",
