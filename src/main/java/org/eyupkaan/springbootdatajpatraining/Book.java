@@ -45,10 +45,9 @@ public class Book {
     public Book() {
     }
 
-    public Book(LocalDateTime createdAt, String bookName, Student student) {
+    public Book(String bookName, LocalDateTime createdAt) {
         this.createdAt = createdAt;
         this.bookName = bookName;
-        this.student = student;
     }
 
     public Long getId() {

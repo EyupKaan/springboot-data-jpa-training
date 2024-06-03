@@ -2,6 +2,9 @@ package org.eyupkaan.springbootdatajpatraining;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "STUDENT")
 @Table(
         name = "STUDENT",
@@ -48,10 +51,28 @@ public class Student {
             name = "AGE"
     )
     private Integer age;
+    @OneToOne(
+            mappedBy = "student",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    )
+    private StudentIdCard studentIdCard;
+    @OneToMany(
+            mappedBy = "student",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    )
+    private List<Book> books = new ArrayList<Book>();
+    @OneToMany(
+            mappedBy = "student",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    )
+    private List<Enrolment> enrolmentList = new ArrayList<>();
 
-    public Student(){
+    public Student() {
 
     }
+
     public Student(String firstName, String lastName, String email, Integer age) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -108,5 +129,42 @@ public class Student {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+    //TODO - compare book class for this keyword (there is not this)
+
+    public void addBook(Book book) {
+        if (!this.books.contains(book)) {
+            this.books.add(book);
+            book.setStudent(this);
+        }
+    }
+
+    public void removeBook(Book book) {
+        if (this.books.contains(book)) {
+            books.remove(book);
+            book.setStudent(null);
+        }
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public StudentIdCard getStudentIdCard() {
+        return studentIdCard;
+    }
+
+    public void setStudentIdCard(StudentIdCard studentIdCard) {
+        this.studentIdCard = studentIdCard;
+    }
+
+    public void addEnrolment(Enrolment enrolment) {
+        if (!enrolmentList.contains(enrolment))
+            enrolmentList.add(enrolment);
+    }
+
+    public void removeEnrolment(Enrolment enrolment) {
+        if (enrolmentList.contains(enrolment))
+            enrolmentList.remove(enrolment);
     }
 }
